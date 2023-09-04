@@ -1,0 +1,56 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "experimentalDecorators": true,
+        "useDefineForClassFields": true,
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "allowJs": false,
+        "skipLibCheck": true,
+        "esModuleInterop": false,
+        "allowSyntheticDefaultImports": true,
+        "allowImportingTsExtensions": true,
+        "composite": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "ESNext",
+
+        /* Bundler mode */
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+
+        "baseUrl": "./",
+        "paths": {
+            "#/*": ["./src/*"],
+            "#pages/*": ["./src/pages/*"],
+            "#components/*": ["./src/UI/components/*"],
+            "#widgets/*": ["./src/UI/widgets/*"],
+            "#layouts/*": ["./src/UI/layouts/*"],
+            "#providers/*": ["./src/providers/*"]
+        }
+    },
+    "types": ["vite/client", "jest", "@types/testing-library__jest-dom", "@types/react", "node"],
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx",
+        "./src/**/*.json",
+        "package.json",
+        "jest.setup.js"
+    ],
+    "references": [{ "path": "./tsconfig.node.json" }],
+    "exclude": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "./dist/**/*",
+        "node_modules",
+        "**/*.svg",
+        "./example/**/*"
+    ]
+}
