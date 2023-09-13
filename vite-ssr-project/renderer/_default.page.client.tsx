@@ -1,23 +1,36 @@
-export { render }
+import type { PageContextClient } from './types';
+import { PageShell } from './PageShell';
+import ReactDOM from 'react-dom/client';
 
-import { hydrateRoot } from 'react-dom/client'
-import { PageShell } from './PageShell'
-import type { PageContextClient } from './types'
+let root: ReactDOM.Root;
 
-// This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
 async function render(pageContext: PageContextClient) {
-  const { Page, pageProps } = pageContext
-  if (!Page) throw new Error('Client-side render() hook expects pageContext.Page to be defined')
-  const root = document.getElementById('react-root')
-  if (!root) throw new Error('DOM element #react-root not found')
-  hydrateRoot(
-    root,
-    <PageShell pageContext={pageContext}>
-      <Page {...pageProps} />
-    </PageShell>
-  )
+    const { Page, pageProps } = pageContext;
+    console.log('pageContext');
+    const pageComponent = (
+        <PageShell pageContext={pageContext}>
+            <Page {...pageProps} />
+        </PageShell>
+    );
+    const container = document.getElementById('react-root');
+    if (!container) throw new Error('DOM element #react-root not found');
+
+    if (container.innerHTML === '' || !pageContext.isHydration) {
+        if (!root) {
+            root = ReactDOM.createRoot(container);
+        }
+        root.render(pageComponent);
+    } else {
+        root = ReactDOM.hydrateRoot(container, pageComponent);
+    }
 }
 
-/* To enable Client-side Routing:
-export const clientRouting = true
-// !! WARNING !! Before doing so, read https://vite-plugin-ssr.com/clientRouting */
+function onHydrationEnd() {
+    console.log('The page is now interactive');
+}
+
+export { onHydrationEnd, render };
+
+export const clientRouting = true;
+export const hydrationCanBeAborted = true;
+export const prefetchStaticAssets = 'viewport';

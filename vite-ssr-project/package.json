@@ -31,8 +31,5 @@
     "vite": "^4.4.9",
     "vite-plugin-ssr": "^0.4.140"
   },
-  "type": "module",
-  "devDependencies": {
-    "vite-plugin-circular-dependency": "^0.2.1"
-  }
+  "type": "module"
 }

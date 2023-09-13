@@ -1,18 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { useTestHook } from 'react-vite-library';
+import { navigate } from 'vite-plugin-ssr/client/router';
+import { usePageContext } from '../../renderer/usePageContext';
+
 export { Page };
 
 function Page() {
-    // @ts-ignore
-    React.test = 1;
-    // @ts-ignore
-    ReactDOM.test = 1;
-    const { count, setCount } = useTestHook();
+    const { urlOriginal } = usePageContext();
+    const [count, setCount] = React.useState(0);
     return (
         <div>
+            {urlOriginal}
             <div>{count}</div>
             <button onClick={() => setCount(count + 1)}>add</button>
+            <button onClick={() => navigate('/?service=test' + count)}>navigate</button>
         </div>
     );
 }
